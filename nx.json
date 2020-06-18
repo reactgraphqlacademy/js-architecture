@@ -1,0 +1,30 @@
+{
+  "npmScope": "js-architecture-webinar",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
+  },
+  "projects": {
+    "front1": {
+      "tags": []
+    },
+    "front1-e2e": {
+      "tags": [],
+      "implicitDependencies": ["front1"]
+    }
+  }
+}
