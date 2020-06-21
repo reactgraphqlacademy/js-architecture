@@ -6,6 +6,42 @@ This project was generated using [Nx](https://nx.dev).
 
 🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
 
+## Deployment
+
+This NX workspace has been edited to enable deployment of the GraphQL API to Google Cloud Platform using Circle CI as follows:
+
+- Added file `.circleci/config.yml`
+- Added docker file `apps/graphql-api/Dockerfile`.
+- Added a `deploy` task in `workspace.json` for the `architecture` property:
+
+```
+{
+ "graphql-api": {
+        "root": "apps/graphql-api",
+        "sourceRoot": "apps/graphql-api/src",
+        "projectType": "application",
+        "prefix": "graphql-api",
+        "schematics": {},
+        "architect": {
+            "deploy": {
+                // see workspace.json in this repo
+            }
+        }
+    }
+}
+```
+
+### How it works
+
+When a PR is merged to master, if any code in `apps/graphql-api` or any of the libs that it depends on has change, then the `deploy` task will be executed by CircleCI as follows:
+
+### References
+
+- https://cloud.google.com/run/docs/quickstarts/build-and-deploy#node.js_1
+- https://cloud.google.com/sdk/gcloud/reference/builds/submit
+- https://cloud.google.com/run/docs/about-concurrency
+- https://circleci.com/docs/2.0/google-auth/
+
 ## Adding capabilities to your workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.

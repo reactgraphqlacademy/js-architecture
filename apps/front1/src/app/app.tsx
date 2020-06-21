@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import { Box } from '@js-architecture-webinar/ui';
 
 import { ReactComponent as Logo } from './logo.svg';
 import star from './star.svg';
@@ -148,7 +149,9 @@ export const App = () => {
     <StyledApp>
       <header className="flex">
         <Logo width="75" height="75" />
-        <h1>Welcome to front1!</h1>
+        <Box as="h1" sx={{ backgroundColor: 'red' }}>
+          Welcome to front1!
+        </Box>
       </header>
       <main>
         <h2>Resources &amp; Tools</h2>

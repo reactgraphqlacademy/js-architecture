@@ -15,7 +15,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@js-architecture-webinar/ui": ["libs/ui/src/index.ts"],
+      "@js-architecture-webinar/books": ["libs/books/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -48,7 +48,8 @@
         "serve": {
           "builder": "@nrwl/web:dev-server",
           "options": {
-            "buildTarget": "front1:build"
+            "buildTarget": "front1:build",
+            "proxyConfig": "apps/front1/proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -101,6 +102,140 @@
             "linter": "eslint",
             "tsConfig": ["apps/front1-e2e/tsconfig.e2e.json"],
             "exclude": ["**/node_modules/**", "!apps/front1-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "ui": {
+      "root": "libs/ui",
+      "sourceRoot": "libs/ui/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/ui/tsconfig.lib.json",
+              "libs/ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ui/jest.config.js",
+            "tsConfig": "libs/ui/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "graphql-api": {
+      "root": "apps/graphql-api",
+      "sourceRoot": "apps/graphql-api/src",
+      "projectType": "application",
+      "prefix": "graphql-api",
+      "schematics": {},
+      "architect": {
+        "deploy": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "cwd": "dist/apps/graphql-api",
+            "parallel": false,
+            "commands": [
+              {
+                "command": "cp ../../../apps/graphql-api/Dockerfile ."
+              },
+              {
+                "command": "cp ../../../package.json ."
+              },
+              {
+                "command": "cp ../../../yarn.lock ."
+              },
+              {
+                "command": "gcloud builds submit --tag gcr.io/👉ADD_GCP_PROJECT_NAME_HERE/👉ADD_GCP_STORAGE_DIRECTORY_NAME_HERE"
+              },
+              {
+                "command": "gcloud beta run deploy 👉ADD_GOOGLE_CLOUD_RUN_SERVCICE_NAME_HERE --image gcr.io/👉ADD_GCP_PROJECT_NAME_HERE/👉ADD_GCP_STORAGE_DIRECTORY_NAME_HERE --platform managed --region europe-west1"
+              }
+            ]
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/graphql-api",
+            "main": "apps/graphql-api/src/main.ts",
+            "tsConfig": "apps/graphql-api/tsconfig.app.json",
+            "assets": ["apps/graphql-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/graphql-api/src/environments/environment.ts",
+                  "with": "apps/graphql-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "graphql-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/graphql-api/tsconfig.app.json",
+              "apps/graphql-api/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/graphql-api/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/graphql-api/jest.config.js",
+            "tsConfig": "apps/graphql-api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "books": {
+      "root": "libs/books",
+      "sourceRoot": "libs/books/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "libs/books/tsconfig.lib.json",
+              "libs/books/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/books/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/books/jest.config.js",
+            "tsConfig": "libs/books/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }

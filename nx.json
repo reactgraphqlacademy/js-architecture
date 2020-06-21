@@ -25,6 +25,15 @@
     "front1-e2e": {
       "tags": [],
       "implicitDependencies": ["front1"]
+    },
+    "ui": {
+      "tags": []
+    },
+    "graphql-api": {
+      "tags": []
+    },
+    "books": {
+      "tags": []
     }
   }
 }
