@@ -33,7 +33,7 @@ This NX workspace has been edited to enable deployment of the GraphQL API to Goo
 
 ### How it works
 
-When a PR is merged to master, if any code in `apps/graphql-api` or any of the libs that it depends on has change, then the `deploy` task will be executed by CircleCI as follows:
+When a PR is merged into master, if any code in `apps/graphql-api` or any of the libs that it depends on has changed, then the `deploy` task will be executed by CircleCI as follows:
 
 ![CircleCI workflow](docs/circleci-workflow.png?raw=true)
 
